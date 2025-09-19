@@ -4,3 +4,4 @@ pillow==10.4.0
 # Keras 3 + TensorFlow (backend tensorflow)
 keras>=3.3.0
 tensorflow==2.14.0
+numpy<2.0

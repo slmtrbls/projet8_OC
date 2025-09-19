@@ -6,7 +6,8 @@ ENV TF_ENABLE_ONEDNN_OPTS=0 \
 
 # Dépendances Python backend
 COPY requirements-backend.txt ./
-RUN pip install --no-cache-dir -r requirements-backend.txt
+RUN pip install --upgrade pip && \
+    pip install --only-binary=:all: --no-cache-dir -r requirements-backend.txt
 
 # Code applicatif (tout le projet)
 COPY . ./
