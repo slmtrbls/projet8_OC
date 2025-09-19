@@ -30,6 +30,14 @@ def get_predict_mask_url(image_id: str) -> str:
 	return f"{BACKEND_URL}/predict/{image_id}"
 
 
+def _show_image_compat(image, caption: str | None = None) -> None:
+	# Compatibilité anciennes versions de Streamlit
+	try:
+		st.image(image, caption=caption, use_container_width=True)
+	except TypeError:
+		st.image(image, caption=caption, use_column_width=True)
+
+
 ids = fetch_ids()
 if not ids:
 	st.warning("Aucun ID trouvé. Vérifiez le backend et le dossier app/images.")
@@ -41,12 +49,12 @@ cols = st.columns(3)
 with cols[0]:
 	st.subheader("Image")
 	if selected_id:
-		st.image(get_image_url(selected_id), use_container_width=True)
+		_show_image_compat(get_image_url(selected_id))
 
 with cols[1]:
 	st.subheader("Mask original")
 	if selected_id:
-		st.image(get_original_mask_url(selected_id), use_container_width=True)
+		_show_image_compat(get_original_mask_url(selected_id))
 
 with cols[2]:
 	st.subheader("Mask généré")
@@ -61,7 +69,10 @@ if st.button("Générer la segmentation", type="primary"):
 				msg = pred_resp.text or pred_resp.reason
 				raise requests.HTTPError(msg, response=pred_resp)
 			pred_png_bytes = pred_resp.content
-			generated_placeholder.image(pred_png_bytes, caption="Mask généré", use_container_width=True)
+			try:
+				generated_placeholder.image(pred_png_bytes, caption="Mask généré", use_container_width=True)
+			except TypeError:
+				generated_placeholder.image(pred_png_bytes, caption="Mask généré", use_column_width=True)
 		except requests.HTTPError as http_exc:
 			st.error(f"Erreur backend: {getattr(http_exc.response, 'status_code', '')} - {http_exc}")
 		except Exception as exc:
