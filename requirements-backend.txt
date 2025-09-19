@@ -1,7 +1,6 @@
 fastapi==0.115.0
 mangum==0.17.0
 pillow==10.4.0
-# Keras 3 + TensorFlow (backend tensorflow)
-keras>=3.3.0
-tensorflow==2.14.0
+# TensorFlow (inclut Keras 3 en dépendance)
+tensorflow==2.17.1
 numpy<2.0
