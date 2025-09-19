@@ -72,7 +72,7 @@ Thumbs.db
 *.log
 
 # unuseful files
-masks/*_InstanceIds.png
+masks/*_instanceIds.png
 masks/*_polygons.json
 masks/*_gtFine_labelIds.png
 
