@@ -15,7 +15,7 @@ st.title("Segmentation - Démo")
 def fetch_ids() -> List[str]:
 	resp = requests.get(f"{BACKEND_URL}/ids", timeout=10)
 	resp.raise_for_status()
-	return resp.json()
+	return resp.json() 
 
 
 def get_image_url(image_id: str) -> str:
